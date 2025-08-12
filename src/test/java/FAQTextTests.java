@@ -7,7 +7,7 @@ import org.pages.FAQPage;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class FAQTextTest {
+public class FAQTextTests {
 
     private WebDriver driver;
 

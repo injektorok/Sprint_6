@@ -8,7 +8,7 @@ import org.pages.ForWhomSamokatPage;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class FullFlowTest {
+public class FullFlowTests {
 
     private WebDriver driver;
 
