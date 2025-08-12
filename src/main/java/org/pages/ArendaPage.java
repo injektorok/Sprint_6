@@ -10,14 +10,17 @@ import java.time.Duration;
 public class ArendaPage {
 
     private WebDriver driver;
+
+    // поля страницы "Про Аренду"
     private By calendarField = By.cssSelector(".react-datepicker__input-container");
     private By arendaPeriodField = By.cssSelector(".Dropdown-placeholder");
-    private By commentaryField = By.cssSelector(".Input_InputContainer__3NykH > .Input_Responsible__1jDKN");
-    private By finalOrderButton = By.cssSelector(".Button_Middle__1CSJM:nth-child(2)");
-    //private By confirmOrderButton = By.className("Button_Button__ra12g Button_Middle__1CSJM");
-    private By confirmOrderButton = By.cssSelector(".Order_Modal__YZ-d3 .Order_Buttons__1xGrp button:nth-child(2)");
+    private By commentaryField = By.xpath(".//input[@placeholder='Комментарий для курьера']");
 
-    private By successMessage = By.cssSelector(".Order_ModalHeader__3FDaJ");
+    private By finalOrderButton = By.xpath(".//button[contains(@class, 'Button_Middle') and text()='Заказать']");
+    private By confirmOrderButton = By.xpath(".//div[contains(@class, 'Order_Buttons')]/button[text()='Да']");
+
+    // сообщение об успешно принятом заказе (только для FireFox!)
+    private By successMessage = By.xpath(".//*[text()='Заказ оформлен']");
 
     public ArendaPage(WebDriver driver) {
         this.driver = driver;
@@ -52,9 +55,6 @@ public class ArendaPage {
     }
 
     public void clickConfirmationOrderButton() {
-        //       new WebDriverWait(driver, 5);
-        //              .until(ExpectedConditions.elementToBeClickable(confirmOrderButton));
-
         var button = driver.findElement(confirmOrderButton);
         button.click();
     }
@@ -63,7 +63,7 @@ public class ArendaPage {
         return driver.findElement(successMessage).getText();
     }
 
-    public void arendaPagetFilled(String day, String period, String color, String commentary){
+    public void arendaPageFilled(String day, String period, String color, String commentary){
         setCalendarField(day);
         setArendaPeriodField(period);
         setSamokatColor(color);

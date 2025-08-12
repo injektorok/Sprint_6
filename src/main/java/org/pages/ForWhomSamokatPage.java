@@ -12,15 +12,18 @@ import java.time.Duration;
 public class ForWhomSamokatPage {
 
     private WebDriver driver;
+    // кнопка для принятия использования куки-файлов
     private By cookiesButton = By.id("rcc-confirm-button");
-    private By upperOrderButton = By.cssSelector(".Header_Nav__AGCXC > .Button_Button__ra12g");
-    private By lowerOrderButton = By.xpath(".//div[@class='Home_FinishButton__1_cWm']/button[text()='Заказать']");
-    private By nameField = By.cssSelector(".Input_InputContainer__3NykH:nth-child(1) > .Input_Responsible__1jDKN");
-    private By surnameField = By.cssSelector(".Input_InputContainer__3NykH:nth-child(2) > .Input_Input__1iN_Z");
-    private By addressField = By.cssSelector(".Input_InputContainer__3NykH:nth-child(3) > .Input_Input__1iN_Z");
-    private By stationField = By.cssSelector(".select-search__input");
-    private By phoneField = By.cssSelector(".Input_InputContainer__3NykH:nth-child(5) > .Input_Input__1iN_Z");
-    private By nextButton = By.cssSelector(".Button_Middle__1CSJM");
+    // кнопка "Заказать" верхняя и нижняя
+    private By upperOrderButton = By.xpath(".//*[contains(@class, 'Header_Nav')]/button[contains(@class, 'Button')]");
+    private By lowerOrderButton = By.xpath(".//*[contains(@class, 'Home_FinishButton')]/button[contains(@class, 'Button_Middle')]");
+    // блок "Для кого самокат"
+    private By nameField = By.xpath(".//input[contains(@placeholder, 'Имя')]");
+    private By surnameField = By.xpath(".//input[contains(@placeholder, 'Фамилия')]");
+    private By addressField = By.xpath(".//input[contains(@placeholder, 'Адрес')]");
+    private By stationField = By.xpath(".//input[contains(@placeholder, 'Станция')]");
+    private By phoneField = By.xpath(".//input[contains(@placeholder, 'Телефон')]");
+    private By nextButton = By.xpath(".//div[contains(@class, 'Order_NextButton')]/button");
 
     public ForWhomSamokatPage(WebDriver driver) {
         this.driver = driver;
@@ -42,6 +45,8 @@ public class ForWhomSamokatPage {
         element.click();
     }
 
+    // заполнение полей формы
+
     public void setName(String name) {
         driver.findElement(nameField).sendKeys(name);
     }
@@ -54,9 +59,12 @@ public class ForWhomSamokatPage {
         driver.findElement(addressField).sendKeys(address);
     }
 
-    public void setStationField(String stationNumber) {
+    public void setStationField(String station) {
         driver.findElement(stationField).click();
-        String xpath = String.format(".//div[@class='select-search__select']/ul/li[@data-index='%s']/button", stationNumber);
+        new WebDriverWait(driver, Duration.ofSeconds(3))
+                .until(ExpectedConditions.visibilityOfElementLocated(By.xpath(".//div[@class='select-search__select']")));
+
+        String xpath = String.format(".//div[@class='select-search__select']/ul/li[@data-index='%s']/button", station);
         driver.findElement(By.xpath(xpath)).click();
     }
 
@@ -68,24 +76,26 @@ public class ForWhomSamokatPage {
         driver.findElement(nextButton).click();
     }
 
-    public void forWhomSamokatFilledUp(String name, String surname, String address, String stationNumber, String phoneNumber){
+    // метод заполнения через верхнюю кнопку
+    public void forWhomSamokatFilledUp(String name, String surname, String address, String station, String phoneNumber){
         clickCookiesButton();
         clickUpperOrderButton();
         setName(name);
         setSurname(surname);
         setAddress(address);
-        setStationField(stationNumber);
+        setStationField(station);
         setPhoneNumber(phoneNumber);
         clickNextButton();
     }
 
-    public void forWhomSamokatFilledLow(String name, String surname, String address, String stationNumber, String phoneNumber){
+    // метод заполнения через нижнюю кнопку
+    public void forWhomSamokatFilledLow(String name, String surname, String address, String station, String phoneNumber){
         clickCookiesButton();
         clickLowerOrderButton();
         setName(name);
         setSurname(surname);
         setAddress(address);
-        setStationField(stationNumber);
+        setStationField(station);
         setPhoneNumber(phoneNumber);
         clickNextButton();
     }
