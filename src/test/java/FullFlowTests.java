@@ -1,23 +1,12 @@
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.pages.ArendaPage;
 import org.pages.ForWhomSamokatPage;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class FullFlowTests {
+// без параметризации
 
-    private WebDriver driver;
-
-    @BeforeEach
-    public void startUp() {
-        driver = new ChromeDriver();
-        driver.get("https://qa-scooter.praktikum-services.ru/");
-        driver.manage().window().maximize();
-    }
+public class FullFlowTests extends BaseTest {
 
     @Test
     public void orderPositiveFlowButtonUp() {
@@ -47,9 +36,4 @@ public class FullFlowTests {
         assertTrue(actual.contains("Заказ оформлен"));
     }
 
-    @AfterEach
-    public void teardown() {
-        // Закрой браузер
-        driver.quit();
-    }
 }

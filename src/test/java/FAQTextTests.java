@@ -1,22 +1,11 @@
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.pages.FAQPage;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class FAQTextTests {
+// без параметризации
 
-    private WebDriver driver;
-
-    @BeforeEach
-    public void startUp() {
-        driver = new ChromeDriver();
-        driver.get("https://qa-scooter.praktikum-services.ru/");
-        driver.manage().window().maximize();
-    }
+public class FAQTextTests extends BaseTest {
 
     @Test
     public void testFirstAnswer() {
@@ -96,11 +85,5 @@ public class FAQTextTests {
         objFAQPage.scrollAndClickEighthQuestion();
         String actual = objFAQPage.getEighthAnswer();
         assertEquals(expected, actual, "Текст под спойлером некорректен!");
-    }
-
-    @AfterEach
-    public void teardown() {
-        // Закрываем браузер
-        driver.quit();
     }
 }
